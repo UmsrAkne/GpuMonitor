@@ -14,6 +14,9 @@
     mc:Ignorable="d">
     <Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        <TextBlock FontSize="20" Text="{Binding Val}" />
+        <StackPanel>
+            <TextBlock FontSize="20" Text="{Binding Val}" />
+            <TextBlock FontSize="20" Text="{Binding Val2}" />
+        </StackPanel>
     </Grid>
 </Window>

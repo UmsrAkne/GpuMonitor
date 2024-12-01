@@ -22,5 +22,22 @@ namespace GpuMonitor.Models
 
             return -1;
         }
+
+        public static int GetGpuMemoryUsage()
+        {
+            var gpus = PhysicalGPU.GetPhysicalGPUs();
+            var targetGpu =
+                gpus.FirstOrDefault(g => g.FullName.Contains("geforce", StringComparison.OrdinalIgnoreCase));
+
+            if (targetGpu == null)
+            {
+                return -1;
+            }
+
+            var info = targetGpu.MemoryInformation;
+            var am = info.AvailableDedicatedVideoMemoryInkB;
+            var cm = am - info.CurrentAvailableDedicatedVideoMemoryInkB;
+            return (int)(cm / 1024);
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace GpuMonitor.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private int val;
+        private int val2;
 
         public MainWindowViewModel()
         {
@@ -20,6 +21,7 @@ namespace GpuMonitor.ViewModels
             Timer.Tick += (_, _) =>
             {
                 Val = GpuInsight.GetGpuUsage();
+                Val2 = GpuInsight.GetGpuMemoryUsage();
             };
 
             Timer.Start();
@@ -32,6 +34,8 @@ namespace GpuMonitor.ViewModels
             get => val;
             private set => SetProperty(ref val, value);
         }
+
+        public int Val2 { get => val2; private set => SetProperty(ref val2, value); }
 
         private DispatcherTimer Timer { get; set; }
     }
