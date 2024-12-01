@@ -9,7 +9,6 @@ namespace GpuMonitor.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
     {
-        private int val;
         private int val2;
         private ObservableCollection<int> gpuUsages;
 

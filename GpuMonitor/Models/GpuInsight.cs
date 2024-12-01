@@ -28,10 +28,10 @@ namespace GpuMonitor.Models
         }
 
         /// <summary>
-        /// PCに搭載されているGPUのメモリ使用量を取得します。
+        /// PCに搭載されているGPUのメモリ使用率を取得します。
         /// </summary>
         /// <returns>
-        /// 結果は Mb 単位の整数で取得されます。<br/>
+        /// 結果は、使用可能メモリに対する使用量を百分率で表した整数で取得されます。<br/>
         /// ただし、GPU の情報が取得できなかった場合は -1 を返します。
         /// </returns>
         public static int GetGpuMemoryUsage()
@@ -48,7 +48,8 @@ namespace GpuMonitor.Models
             var info = targetGpu.MemoryInformation;
             var am = info.AvailableDedicatedVideoMemoryInkB;
             var cm = am - info.CurrentAvailableDedicatedVideoMemoryInkB;
-            return (int)(cm / 1024);
+            var f = (float)cm / am;
+            return (int)(f * 100);
         }
     }
 }
