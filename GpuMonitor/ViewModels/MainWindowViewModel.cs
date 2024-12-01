@@ -9,8 +9,8 @@ namespace GpuMonitor.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
     {
-        private int val2;
         private ObservableCollection<int> gpuUsages;
+        private ObservableCollection<int> memoryUsages = new ();
 
         public MainWindowViewModel()
         {
@@ -21,8 +21,8 @@ namespace GpuMonitor.ViewModels
 
             Timer.Tick += (_, _) =>
             {
-                AddItemWithLimit(GpuInsight.GetGpuUsage());
-                Val2 = GpuInsight.GetGpuMemoryUsage();
+                AddItemWithLimit(GpuInsight.GetGpuUsage(), GpuUsages);
+                AddItemWithLimit(GpuInsight.GetGpuMemoryUsage(), MemoryUsages);
             };
 
             Timer.Start();
@@ -43,7 +43,11 @@ namespace GpuMonitor.ViewModels
 
         public TextWrapper TitleTextWrapper { get; set; } = new ();
 
-        public int Val2 { get => val2; private set => SetProperty(ref val2, value); }
+        public ObservableCollection<int> MemoryUsages
+        {
+            get => memoryUsages;
+            set => SetProperty(ref memoryUsages, value);
+        }
 
         public ObservableCollection<int> GpuUsages
         {
@@ -53,12 +57,17 @@ namespace GpuMonitor.ViewModels
 
         private DispatcherTimer Timer { get; set; }
 
-        private void AddItemWithLimit(int v)
+        /// <summary>
+        /// 対象のリストの先頭に、引数で入力した値を挿入。要素数が一定値を超えている場合は、末尾の要素を削除します。
+        /// </summary>
+        /// <param name="v">対象のリストの先頭に挿入する値。</param>
+        /// <param name="target">処理の対象とするリスト。</param>
+        private void AddItemWithLimit(int v, ObservableCollection<int> target)
         {
-            GpuUsages.Insert(0, v);
-            if (GpuUsages.Count > 60)
+            target.Insert(0, v);
+            if (target.Count > 60)
             {
-                GpuUsages.RemoveAt(GpuUsages.Count - 1);
+                target.RemoveAt(target.Count - 1);
             }
         }
     }

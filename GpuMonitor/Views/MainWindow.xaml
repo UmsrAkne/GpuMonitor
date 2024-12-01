@@ -22,14 +22,42 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-            <TextBlock FontSize="20" Text="{Binding Val2}" />
-        </StackPanel>
+        <ItemsControl
+            Grid.Row="0"
+            Background="AntiqueWhite"
+            ItemsSource="{Binding GpuUsages}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding GpuUsages}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type sys:Int32}">
+                    <StackPanel Orientation="Horizontal">
+                        <Border
+                            Width="3"
+                            Height="{Binding Converter={StaticResource DivideConverter}}"
+                            VerticalAlignment="Bottom"
+                            Background="Coral" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Border
+            Grid.Row="1"
+            Height="2"
+            Background="White" />
+
+        <ItemsControl
+            Grid.Row="2"
+            Background="AntiqueWhite"
+            ItemsSource="{Binding MemoryUsages}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
