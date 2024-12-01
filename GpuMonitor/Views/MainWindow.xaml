@@ -2,17 +2,81 @@
     x:Class="GpuMonitor.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:GpuMonitor.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:GpuMonitor.ViewModels"
     Title="{Binding TitleTextWrapper}"
     Width="525"
-    Height="350"
+    Height="100"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+
+    <Window.Resources>
+        <converters:DivideConverter x:Key="DivideConverter" />
+    </Window.Resources>
+
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ItemsControl
+            Grid.Row="0"
+            Background="AntiqueWhite"
+            ItemsSource="{Binding GpuUsages}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type sys:Int32}">
+                    <StackPanel Orientation="Horizontal">
+                        <Border
+                            Width="3"
+                            Height="{Binding Converter={StaticResource DivideConverter}}"
+                            VerticalAlignment="Bottom"
+                            Background="Coral" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Border
+            Grid.Row="1"
+            Height="2"
+            Background="White" />
+
+        <ItemsControl
+            Grid.Row="2"
+            Background="AntiqueWhite"
+            ItemsSource="{Binding MemoryUsages}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type sys:Int32}">
+                    <StackPanel Orientation="Horizontal">
+                        <Border
+                            Width="3"
+                            Height="{Binding Converter={StaticResource DivideConverter}}"
+                            VerticalAlignment="Bottom"
+                            Background="Coral" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
     </Grid>
+
 </Window>
