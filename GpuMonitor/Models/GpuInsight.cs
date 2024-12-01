@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using NvAPIWrapper.GPU;
 
@@ -7,8 +6,13 @@ namespace GpuMonitor.Models
 {
     public static class GpuInsight
     {
-        private static PerformanceCounterCategory PerformanceCounterCategory { get; set; } = new PerformanceCounterCategory("GPU Engine");
-
+        /// <summary>
+        /// PCに搭載されているGPUの使用率を取得します。
+        /// </summary>
+        /// <returns>
+        /// 結果は `0-100` の間の整数で取得されます。<br/>
+        /// ただし、GPU の情報が取得できなかった場合は -1 を返します。
+        /// </returns>
         public static int GetGpuUsage()
         {
             var gpus = PhysicalGPU.GetPhysicalGPUs();
@@ -23,6 +27,13 @@ namespace GpuMonitor.Models
             return -1;
         }
 
+        /// <summary>
+        /// PCに搭載されているGPUのメモリ使用量を取得します。
+        /// </summary>
+        /// <returns>
+        /// 結果は Mb 単位の整数で取得されます。<br/>
+        /// ただし、GPU の情報が取得できなかった場合は -1 を返します。
+        /// </returns>
         public static int GetGpuMemoryUsage()
         {
             var gpus = PhysicalGPU.GetPhysicalGPUs();
