@@ -13,7 +13,7 @@ namespace GpuMonitor.Views.Converters
                 return 0;
             }
 
-            return (int)value / 5;
+            return (int)value / 4;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
