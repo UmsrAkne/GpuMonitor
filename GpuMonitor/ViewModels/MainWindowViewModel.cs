@@ -22,7 +22,7 @@ namespace GpuMonitor.ViewModels
 
             Timer.Tick += (_, _) =>
             {
-                Val = GpuInsight.GetGpuUsage();
+                AddItemWithLimit(GpuInsight.GetGpuUsage());
                 Val2 = GpuInsight.GetGpuMemoryUsage();
             };
 
@@ -30,28 +30,19 @@ namespace GpuMonitor.ViewModels
 
             GpuUsages = new ObservableCollection<int>()
             {
-                10, 20, 30, 40, 50,
-                60, 70, 80, 90, 00,
-                80, 90, 80, 70, 80,
-                70, 60, 50, 60, 70,
-                80, 30, 00, 40, 70,
-                50, 80, 50, 90, 50,
-                10, 20, 30, 40, 50,
-                60, 70, 80, 90, 00,
-                80, 90, 80, 70, 80,
-                70, 60, 50, 60, 70,
-                80, 30, 00, 40, 70,
-                50, 80, 50, 90, 50,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
             };
         }
 
         public TextWrapper TitleTextWrapper { get; set; } = new ();
-
-        public int Val
-        {
-            get => val;
-            private set => SetProperty(ref val, value);
-        }
 
         public int Val2 { get => val2; private set => SetProperty(ref val2, value); }
 
@@ -62,5 +53,14 @@ namespace GpuMonitor.ViewModels
         }
 
         private DispatcherTimer Timer { get; set; }
+
+        private void AddItemWithLimit(int v)
+        {
+            GpuUsages.Insert(0, v);
+            if (GpuUsages.Count > 60)
+            {
+                GpuUsages.RemoveAt(GpuUsages.Count - 1);
+            }
+        }
     }
 }

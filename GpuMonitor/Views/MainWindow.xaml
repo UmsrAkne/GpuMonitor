@@ -26,7 +26,6 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <TextBlock FontSize="20" Text="{Binding Val}" />
             <TextBlock FontSize="20" Text="{Binding Val2}" />
         </StackPanel>
 
@@ -41,7 +40,7 @@
                 <DataTemplate DataType="{x:Type sys:Int32}">
                     <StackPanel Orientation="Horizontal">
                         <Border
-                            Width="5"
+                            Width="3"
                             Height="{Binding Converter={StaticResource DivideConverter}}"
                             VerticalAlignment="Bottom"
                             Background="Coral" />
