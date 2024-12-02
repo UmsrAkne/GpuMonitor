@@ -11,6 +11,8 @@ namespace GpuMonitor.ViewModels
     {
         private ObservableCollection<int> gpuUsages;
         private ObservableCollection<int> memoryUsages = new ();
+        private int latestGpuUsage;
+        private int latestMemoryUsage;
 
         public MainWindowViewModel()
         {
@@ -21,8 +23,12 @@ namespace GpuMonitor.ViewModels
 
             Timer.Tick += (_, _) =>
             {
-                AddItemWithLimit(GpuInsight.GetGpuUsage(), GpuUsages);
-                AddItemWithLimit(GpuInsight.GetGpuMemoryUsage(), MemoryUsages);
+                var g = GpuInsight.GetGpuUsage();
+                var m = GpuInsight.GetGpuMemoryUsage();
+                AddItemWithLimit(g, GpuUsages);
+                AddItemWithLimit(m, MemoryUsages);
+                LatestGpuUsage = g;
+                LatestMemoryUsage = m;
             };
 
             Timer.Start();
@@ -53,6 +59,14 @@ namespace GpuMonitor.ViewModels
         {
             get => gpuUsages;
             set => SetProperty(ref gpuUsages, value);
+        }
+
+        public int LatestGpuUsage { get => latestGpuUsage; set => SetProperty(ref latestGpuUsage, value); }
+
+        public int LatestMemoryUsage
+        {
+            get => latestMemoryUsage;
+            set => SetProperty(ref latestMemoryUsage, value);
         }
 
         private DispatcherTimer Timer { get; set; }
