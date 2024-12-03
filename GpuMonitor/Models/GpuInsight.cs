@@ -51,5 +51,20 @@ namespace GpuMonitor.Models
             var f = (float)cm / am;
             return (int)(f * 100);
         }
+
+        /// <summary>
+        /// PCに搭載されているGPUの名前を取得します。
+        /// </summary>
+        /// <returns>
+        /// このメソッドは GPUの名前に Geforce (ケース無視) を含む場合にのみ動作します。それ以外の場合は string.Empty を返します。
+        /// </returns>
+        public static string GetGpuName()
+        {
+            var gpus = PhysicalGPU.GetPhysicalGPUs();
+            var targetGpu =
+                gpus.FirstOrDefault(g => g.FullName.Contains("geforce", StringComparison.OrdinalIgnoreCase));
+
+            return targetGpu == null ? string.Empty : targetGpu.FullName;
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace GpuMonitor.ViewModels
         private ObservableCollection<int> memoryUsages = new ();
         private int latestGpuUsage;
         private int latestMemoryUsage;
+        private string gpuName;
 
         public MainWindowViewModel()
         {
@@ -45,6 +46,8 @@ namespace GpuMonitor.ViewModels
                 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0,
             };
+
+            GpuName = GpuInsight.GetGpuName();
         }
 
         public TextWrapper TitleTextWrapper { get; set; } = new ();
@@ -68,6 +71,8 @@ namespace GpuMonitor.ViewModels
             get => latestMemoryUsage;
             set => SetProperty(ref latestMemoryUsage, value);
         }
+
+        public string GpuName { get => gpuName; set => SetProperty(ref gpuName, value); }
 
         private DispatcherTimer Timer { get; set; }
 
