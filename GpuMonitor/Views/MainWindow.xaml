@@ -45,13 +45,13 @@
             Margin="5,0"
             VerticalAlignment="Center"
             FontSize="16"
-            Text="{Binding LatestGpuUsage, StringFormat=Usage : {0}％}" />
+            Text="{Binding GpuUsageLogger.LatestUsage, StringFormat=Usage : {0}％}" />
 
         <ItemsControl
             Grid.Row="1"
             Grid.Column="1"
             Background="AntiqueWhite"
-            ItemsSource="{Binding GpuUsages}">
+            ItemsSource="{Binding GpuUsageLogger.Usages}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
@@ -85,13 +85,13 @@
             Margin="5,0"
             VerticalAlignment="Center"
             FontSize="16"
-            Text="{Binding LatestMemoryUsage, StringFormat=Memory : {0}％}" />
+            Text="{Binding MemoryUsageLogger.LatestUsage, StringFormat=Memory : {0}％}" />
 
         <ItemsControl
             Grid.Row="3"
             Grid.Column="1"
             Background="AntiqueWhite"
-            ItemsSource="{Binding MemoryUsages}">
+            ItemsSource="{Binding MemoryUsageLogger.Usages}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
