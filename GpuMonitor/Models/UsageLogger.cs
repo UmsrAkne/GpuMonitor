@@ -19,7 +19,10 @@ namespace GpuMonitor.Models
 
         public ReadOnlyObservableCollection<int> Usages { get; }
 
-        public int LatestUsage { get => latestUsage; set => SetProperty(ref latestUsage, value); }
+        /// <summary>
+        /// 最後に AddUsage に入力された使用率を取得します。
+        /// </summary>
+        public int LatestUsage { get => latestUsage; private set => SetProperty(ref latestUsage, value); }
 
         /// <summary>
         /// Log の記録数を設定・取得します。デフォルトは 60 で、一分間のログを保持します。
