@@ -19,8 +19,9 @@
         <converters:DivideConverter x:Key="DivideConverter" />
     </Window.Resources>
 
-    <Grid>
+    <Grid Margin="5,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -34,17 +35,23 @@
         <TextBlock
             Grid.Row="0"
             Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Text="{Binding GpuName, StringFormat=GPU :{0}}" />
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
             Width="120"
             Margin="5,0"
             VerticalAlignment="Center"
             FontSize="16"
-            Text="{Binding LatestGpuUsage, StringFormat=Usage : {0}％}" />
+            Text="{Binding GpuUsageLogger.LatestUsage, StringFormat=Usage : {0}％}" />
 
         <ItemsControl
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             Background="AntiqueWhite"
-            ItemsSource="{Binding GpuUsages}">
+            ItemsSource="{Binding GpuUsageLogger.Usages}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
@@ -65,26 +72,26 @@
         </ItemsControl>
 
         <Border
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Height="2"
             Background="Gray" />
 
         <TextBlock
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Width="120"
             Margin="5,0"
             VerticalAlignment="Center"
             FontSize="16"
-            Text="{Binding LatestMemoryUsage, StringFormat=Memory : {0}％}" />
+            Text="{Binding MemoryUsageLogger.LatestUsage, StringFormat=Memory : {0}％}" />
 
         <ItemsControl
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="1"
             Background="AntiqueWhite"
-            ItemsSource="{Binding MemoryUsages}">
+            ItemsSource="{Binding MemoryUsageLogger.Usages}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
