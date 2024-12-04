@@ -17,6 +17,7 @@
 
     <Window.Resources>
         <converters:DivideConverter x:Key="DivideConverter" />
+        <sys:Int32 x:Key="GraphHeight">100</sys:Int32>
     </Window.Resources>
 
     <Grid Margin="5,0">
@@ -29,7 +30,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <TextBlock
@@ -60,13 +61,16 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type sys:Int32}">
-                    <StackPanel Orientation="Horizontal">
+                    <Border
+                        Height="{Binding Source={StaticResource GraphHeight}, Converter={StaticResource DivideConverter}}"
+                        VerticalAlignment="Bottom"
+                        Background="NavajoWhite">
                         <Border
                             Width="3"
                             Height="{Binding Converter={StaticResource DivideConverter}}"
                             VerticalAlignment="Bottom"
                             Background="Coral" />
-                    </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
@@ -100,13 +104,16 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type sys:Int32}">
-                    <StackPanel Orientation="Horizontal">
+                    <Border
+                        Height="{Binding Source={StaticResource GraphHeight}, Converter={StaticResource DivideConverter}}"
+                        VerticalAlignment="Bottom"
+                        Background="NavajoWhite">
                         <Border
                             Width="3"
                             Height="{Binding Converter={StaticResource DivideConverter}}"
                             VerticalAlignment="Bottom"
                             Background="Coral" />
-                    </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
