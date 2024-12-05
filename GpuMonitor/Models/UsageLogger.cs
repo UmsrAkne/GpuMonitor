@@ -15,6 +15,7 @@ namespace GpuMonitor.Models
         private int usageExcessiveCounter;
         private bool isWarningEnabled;
         private bool isExcessive;
+        private string displayName;
 
         public UsageLogger()
         {
@@ -42,6 +43,11 @@ namespace GpuMonitor.Models
         /// 使用率が過剰だと判定された時、true になります。
         /// </summary>
         public bool IsExcessive { get => isExcessive; private set => SetProperty(ref isExcessive, value); }
+
+        /// <summary>
+        /// このロガーの識別名を設定・取得します。この値はビューに直接表示されます。
+        /// </summary>
+        public string DisplayName { get => displayName; set => SetProperty(ref displayName, value); }
 
         /// <summary>
         /// このクラスが保持するリストの先頭に、引数で入力した値を挿入します。
