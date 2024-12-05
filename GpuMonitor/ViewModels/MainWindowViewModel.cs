@@ -31,9 +31,9 @@ namespace GpuMonitor.ViewModels
 
         public TextWrapper TitleTextWrapper { get; set; } = new ();
 
-        public UsageLogger GpuUsageLogger { get; set; } = new ();
+        public UsageLogger GpuUsageLogger { get; set; } = new () { DisplayName = "Gpu Usage", };
 
-        public UsageLogger MemoryUsageLogger { get; set; } = new ();
+        public UsageLogger MemoryUsageLogger { get; set; } = new () { DisplayName = "Memory Usage", };
 
         public string GpuName { get => gpuName; set => SetProperty(ref gpuName, value); }
 

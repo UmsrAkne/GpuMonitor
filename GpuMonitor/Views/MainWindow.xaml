@@ -5,6 +5,7 @@
     xmlns:converters="clr-namespace:GpuMonitor.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:GpuMonitor.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:GpuMonitor.ViewModels"
@@ -18,105 +19,78 @@
     <Window.Resources>
         <converters:DivideConverter x:Key="DivideConverter" />
         <sys:Int32 x:Key="GraphHeight">100</sys:Int32>
+
+        <!--  GPUの使用状況グラフを表示する ItemsControl のテンプレート  -->
+        <DataTemplate x:Key="GpuUsageGraphTemplate" DataType="{x:Type models:UsageLogger}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Width="120"
+                    Margin="5,0"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="{Binding DisplayName}" />
+
+                <TextBlock
+                    Width="50"
+                    Margin="5,0"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="{Binding LatestUsage, StringFormat=: {0}％}" />
+
+                <ItemsControl Background="AntiqueWhite" ItemsSource="{Binding Usages}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type sys:Int32}">
+                            <Border
+                                Height="{Binding Source={StaticResource GraphHeight}, Converter={StaticResource DivideConverter}}"
+                                VerticalAlignment="Bottom"
+                                Background="NavajoWhite">
+                                <Border
+                                    Width="3"
+                                    Height="{Binding Converter={StaticResource DivideConverter}}"
+                                    VerticalAlignment="Bottom"
+                                    Background="Coral" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Margin="5,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock
+        <ContentControl
             Grid.Row="0"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Text="{Binding GpuName, StringFormat=GPU :{0}}" />
-
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="0"
-            Width="120"
-            Margin="5,0"
-            VerticalAlignment="Center"
-            FontSize="16"
-            Text="{Binding GpuUsageLogger.LatestUsage, StringFormat=Usage : {0}％}" />
-
-        <ItemsControl
-            Grid.Row="1"
-            Grid.Column="1"
-            Background="AntiqueWhite"
-            ItemsSource="{Binding GpuUsageLogger.Usages}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type sys:Int32}">
-                    <Border
-                        Height="{Binding Source={StaticResource GraphHeight}, Converter={StaticResource DivideConverter}}"
-                        VerticalAlignment="Bottom"
-                        Background="NavajoWhite">
-                        <Border
-                            Width="3"
-                            Height="{Binding Converter={StaticResource DivideConverter}}"
-                            VerticalAlignment="Bottom"
-                            Background="Coral" />
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            Content="{Binding GpuUsageLogger}"
+            ContentTemplate="{StaticResource GpuUsageGraphTemplate}" />
 
         <Border
+            Grid.Row="1"
+            Height="1"
+            Background="DimGray" />
+
+        <ContentControl
             Grid.Row="2"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Height="2"
-            Background="Gray" />
-
-        <TextBlock
-            Grid.Row="3"
-            Grid.Column="0"
-            Width="120"
-            Margin="5,0"
-            VerticalAlignment="Center"
-            FontSize="16"
-            Text="{Binding MemoryUsageLogger.LatestUsage, StringFormat=Memory : {0}％}" />
-
-        <ItemsControl
-            Grid.Row="3"
-            Grid.Column="1"
-            Background="AntiqueWhite"
-            ItemsSource="{Binding MemoryUsageLogger.Usages}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type sys:Int32}">
-                    <Border
-                        Height="{Binding Source={StaticResource GraphHeight}, Converter={StaticResource DivideConverter}}"
-                        VerticalAlignment="Bottom"
-                        Background="NavajoWhite">
-                        <Border
-                            Width="3"
-                            Height="{Binding Converter={StaticResource DivideConverter}}"
-                            VerticalAlignment="Bottom"
-                            Background="Coral" />
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            Content="{Binding MemoryUsageLogger}"
+            ContentTemplate="{StaticResource GpuUsageGraphTemplate}" />
 
     </Grid>
 
