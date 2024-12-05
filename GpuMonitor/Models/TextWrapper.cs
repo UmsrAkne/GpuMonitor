@@ -34,7 +34,7 @@ namespace GpuMonitor.Models
         [Conditional("RELEASE")]
         private void SetVersion()
         {
-            Version = "20241204" + "a";
+            Version = "20241205" + "a";
         }
 
         [Conditional("DEBUG")]
